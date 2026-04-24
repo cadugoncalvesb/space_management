@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Space;
 use App\Models\Local;
 
-class LocalController extends Controller
+class SpaceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $locals = Local::all();
+        // O padrão seria $spaces = Space::all();
+        // Mas como irá exibir o nome do Local na tela, usa-se o 'with' para o banco de dados já trazer essa informação junto.
+        $spaces = Space::with('local')->get();
 
-        return view('locals.index', compact('locals'));
+        return view('spaces.index', compact('spaces'));
     }
 
     /**
@@ -22,7 +25,9 @@ class LocalController extends Controller
      */
     public function create()
     {
-        return view('locals.create');
+        $locals = Local::all();
+
+        return view('spaces.create', compact('locals'));
     }
 
     /**
@@ -30,9 +35,9 @@ class LocalController extends Controller
      */
     public function store(Request $request)
     {
-        Local::create($request->all());
+        Space::create($request->all());
 
-       return redirect()->route('locals.index');
+        return redirect()->route('spaces.index');
     }
 
     /**
@@ -48,9 +53,9 @@ class LocalController extends Controller
      */
     public function edit(string $id)
     {
-        $local = Local::findOrFail($id);
-
-        return view('locals.edit', compact('local'));
+        $space = Space::findOrFail($id);
+        $locals = Local::all();
+        return view('spaces.edit', compact('space', 'locals'));
     }
 
     /**
@@ -58,10 +63,10 @@ class LocalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $local = Local::findOrFail($id);
-        $local->update($request->all());
+        $space = Space::findOrFail($id);
+        $space->update($request->all());
 
-        return redirect()->route('locals.index');
+        return redirect()->route('spaces.index');
     }
 
     /**
@@ -69,8 +74,8 @@ class LocalController extends Controller
      */
     public function destroy(string $id)
     {
-        Local::findOrFail($id)->delete();
+        Space::findOrFail($id)->delete();
 
-        return redirect()->route('locals.index');
+        return redirect()->route('spaces.index');
     }
 }
