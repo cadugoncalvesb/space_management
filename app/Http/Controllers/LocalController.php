@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Local;
+use App\Http\Requests\StoreLocalRequest;
 
 class LocalController extends Controller
 {
@@ -28,7 +29,7 @@ class LocalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLocalRequest $request)
     {
         Local::create($request->all());
 
