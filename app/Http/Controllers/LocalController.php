@@ -57,7 +57,7 @@ class LocalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreLocalRequest $request, string $id)
     {
         $local = Local::findOrFail($id);
         $local->update($request->all());

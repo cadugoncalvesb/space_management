@@ -14,7 +14,8 @@
             <li>
                 {{ $local->name }}
 
-                <form action="{{ route('locals.destroy', $local->id) }}" method="POST" style="display:inline;">
+                <form action="{{ route('locals.destroy', $local->id) }}" method="POST" style="display:inline;"
+                      onsubmit="return confirm('Tem certeza que deseja excluir este local?')">
                     @csrf
                     @method('DELETE')
                     <a href="{{ route('locals.edit', $local->id) }}">Editar</a>
