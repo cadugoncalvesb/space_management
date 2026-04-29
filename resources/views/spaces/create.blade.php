@@ -7,19 +7,30 @@
 <body>
     <h1>Novo Espaço</h1>
 
+    @if($errors->any())
+        <div style="color: red; margin-bottom: 20px;">
+            <strong>Atenção:</strong>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('spaces.store') }}" method="POST">
         @csrf
 
-        Nome do Espaço: <input type="text" name="name">
-        Tipo (ex: Laboratório, Sala): <input type="text" name="type">
-        Capacidade: <input type="number" name="capacity">
+        Nome do Espaço: <input type="text" name="name" value="{{old('name')}}" required>
+        Tipo (ex: Laboratório, Sala): <input type="text" name="type" value="{{old('type')}}" required>
+        Capacidade: <input type="number" name="capacity" value="{{old('capacity')}}" required>
         Status:
-        <select name="status">
-            <option value="active">Ativo</option>
-            <option value="inactive">Inativo</option>
-            <option value="maintenance">Em Manutenção</option>
+        <select name="status" required>
+            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Ativo</option>
+            <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inativo</option>
+            <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Em Manutenção</option>
         </select>
-        <select name="local_id">
+        <select name="local_id" required>
             <option value="">Selecione um Local:</option>
             @foreach($locals as $local)
                 <option value="{{ $local->id }}">{{ $local->name }}</option>

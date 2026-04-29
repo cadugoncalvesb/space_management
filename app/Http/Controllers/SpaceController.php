@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Space;
 use App\Models\Local;
+use App\Http\Requests\StoreSpaceRequest;
 
 class SpaceController extends Controller
 {
@@ -33,7 +34,7 @@ class SpaceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSpaceRequest $request)
     {
         Space::create($request->all());
 
@@ -61,7 +62,7 @@ class SpaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreSpaceRequest $request, string $id)
     {
         $space = Space::findOrFail($id);
         $space->update($request->all());
