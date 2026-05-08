@@ -12,9 +12,29 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                    <!-- LINK DO DASHBOARD (Abre e Fecha) -->
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- SEUS NOVOS LINKS AQUI (Abre e Fecha cada um) -->
+                    <x-nav-link :href="route('locals.index')" :active="request()->routeIs('locals.*')">
+                        {{ __('Locais') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('spaces.index')" :active="request()->routeIs('spaces.*')">
+                        {{ __('Espaços') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                        {{ __('Usuários') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.*')">
+                        {{ __('Reservas') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
