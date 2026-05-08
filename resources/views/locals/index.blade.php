@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestão de Espaços - Locais</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Lista de Locais</h1>
 
     <a href="{{ route('locals.create') }}">Cadastrar Novo Local</a>
@@ -24,5 +20,4 @@
             </li>
         @endforeach
     </ul>
-</body>
-</html>
+@endsection

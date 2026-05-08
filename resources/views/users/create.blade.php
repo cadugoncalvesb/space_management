@@ -1,35 +1,39 @@
-<h1>Cadastrar Usuário</h1>
+@extends('layouts.app')
 
-@if ($errors->any())
-    <div style="color: red; margin-bottom: 20px;">
-        <strong>Atenção:</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+@section('content')
+    <h1>Cadastrar Usuário</h1>
 
-<form action="{{ route('users.store') }}" method="POST">
-    @csrf
+    @if ($errors->any())
+        <div style="color: red; margin-bottom: 20px;">
+            <strong>Atenção:</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-    <p>Nome: <input type="text" name="name" value="{{ old('name') }}"></p>
+    <form action="{{ route('users.store') }}" method="POST">
+        @csrf
 
-    <p>E-mail: <input type="email" name="email" value="{{ old('email') }}"></p>
+        <p>Nome: <input type="text" name="name" value="{{ old('name') }}"></p>
 
-    <p>Telefone: <input type="text" name="phone" value="{{ old('phone') }}"></p>
+        <p>E-mail: <input type="email" name="email" value="{{ old('email') }}"></p>
 
-    <p>Perfil:
-        <select name="role">
-            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Usuário</option>
-            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador</option>
-        </select>
-    </p>
+        <p>Telefone: <input type="text" name="phone" value="{{ old('phone') }}"></p>
 
-    <p>Senha: <input type="password" name="password"></p>
+        <p>Perfil:
+            <select name="role">
+                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Usuário</option>
+                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador</option>
+            </select>
+        </p>
 
-    <p>Confirmar Senha: <input type="password" name="password_confirmation"></p>
+        <p>Senha: <input type="password" name="password"></p>
 
-    <button type="submit">Salvar Usuário</button>
-</form>
+        <p>Confirmar Senha: <input type="password" name="password_confirmation"></p>
+
+        <button type="submit">Salvar Usuário</button>
+    </form>
+@endsection

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Espaço</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Editar Espaço</h1>
 
     <form action="{{ route('spaces.update', $space->id) }}" method="POST">
@@ -33,5 +29,4 @@
 
     <br>
     <a href="{{ route('spaces.index') }}">Voltar para a lista</a>
-</body>
-</html>
+@endsection

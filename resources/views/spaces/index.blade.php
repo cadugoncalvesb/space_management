@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestão de Espaços - Lista</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Lista de Espaços</h1>
 
     <a href="{{ route('spaces.create') }}">Cadastrar Novo Espaço</a>
@@ -43,6 +39,4 @@
         @endforeach
         </tbody>
     </table>
-
-</body>
-</html>
+@endsection

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar Local</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Novo Local</h1>
 
     @if($errors->any())
@@ -30,5 +26,4 @@
 
     <br>
     <a href="{{ route('locals.index') }}">Voltar para a lista</a>
-</body>
-</html>
+@endsection
