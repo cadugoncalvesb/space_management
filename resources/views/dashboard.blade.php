@@ -34,7 +34,7 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay' // Botões de Filtro
                 },
-                events: @json($eventos), // Injeta a variável PHP criada na rota direto no JavaScript!
+                events: @json($eventos), // Injeta a variável PHP criada na rota direto no JavaScript
 
                 // Configurações extras de visualização (Opcional)
                 slotMinTime: '06:00:00', // O calendário começa a mostrar a partir das 06h

@@ -1,7 +1,6 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <!-- Mude o título aqui dependendo da página -->
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Lista de Espaços') }}
         </h2>
@@ -23,7 +22,9 @@
                             <th>Tipo</th>
                             <th>Capacidade</th>
                             <th>Status</th>
-                            <th>Ações</th>
+                            @if(auth()->user()->role === 'admin')
+                                <th>Ações</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -34,17 +35,19 @@
                                 <td>{{ $space->type }}</td>
                                 <td>{{ $space->capacity }}</td>
                                 <td>{{ $space->status }}</td>
-                                <td>
-                                    <a href="{{ route('spaces.edit', $space->id) }}">Editar</a>
+                                @if(auth()->user()->role === 'admin')
+                                    <td>
+                                        <a href="{{ route('spaces.edit', $space->id) }}">Editar</a>
 
-                                    <form action="{{ route('spaces.destroy', $space->id) }}" method="POST"
-                                          style="display:inline;"
-                                          onsubmit="return confirm('Tem certeza que deseja exluir este espaço?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Excluir</button>
-                                    </form>
-                                </td>
+                                        <form action="{{ route('spaces.destroy', $space->id) }}" method="POST"
+                                              style="display:inline;"
+                                              onsubmit="return confirm('Tem certeza que deseja exluir este espaço?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit">Excluir</button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
