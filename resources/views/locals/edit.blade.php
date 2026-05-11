@@ -1,19 +1,60 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('content')
-    <h1>Novo Local</h1>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Editar Local:') }} {{ $local->name }}
+        </h2>
+    </x-slot>
 
-    <form action="{{ route('locals.update', $local->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
 
-        Nome do local: <input name="name" type="text" value="{{$local->name}}">
-        Endereço: <input name="address" type="text" value="{{$local->address}}">
-        Descrições: <input name="description" type="text" value="{{$local->description}}">
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                            <strong class="font-bold">Atenção!</strong>
+                            <ul class="mt-2 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-        <button type="submit">Salvar Local</button>
-    </form>
+                    <form action="{{ route('locals.update', $local->id) }}" method="POST" class="space-y-6">
+                        @csrf
+                        @method('PUT')
 
-    <br>
-    <a href="{{ route('locals.index') }}">Voltar para a lista</a>
-@endsection
+                        <div>
+                            <x-input-label for="name" value="Nome do Local" />
+                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value="{{ old('name', $local->name) }}" required autofocus />
+                        </div>
+
+                        <div>
+                            <x-input-label for="address" value="Endereço" />
+                            <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" value="{{ old('address', $local->address) }}" required />
+                        </div>
+
+                        <div>
+                            <x-input-label for="description" value="Descrição" />
+                            <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" value="{{ old('description', $local->description) }}" />
+                        </div>
+
+                        <div class="flex items-center gap-4 pt-4">
+                            <x-primary-button>
+                                Salvar Alterações
+                            </x-primary-button>
+
+                            <a href="{{ route('locals.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+                                Cancelar e Voltar
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</x-app-layout>
