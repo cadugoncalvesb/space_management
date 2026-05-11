@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Space;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Http\Requests\StoreBookingRequest;
@@ -16,11 +17,11 @@ class BookingController extends Controller
     {
         $user = Auth::user();
 
-//        if ($user->role === 'admin') {
+        if ($user->role === 'admin') {
             $bookings = Booking::with(['user', 'space'])->latest()->get();
-//        } else {
-//            $bookings = Booking::with(['space'])->where('user_id', $user->id)->latest()->get();
-//        }
+        } else {
+            $bookings = Booking::with(['space'])->where('user_id', $user->id)->latest()->get();
+        }
 
         return view('bookings.index', compact('bookings'));
     }
@@ -30,7 +31,8 @@ class BookingController extends Controller
      */
     public function create()
     {
-
+        $spaces = Space::all();
+        return view('bookings.create', compact('spaces'));
     }
 
     /**
@@ -38,7 +40,6 @@ class BookingController extends Controller
      */
     public function store(StoreBookingRequest $request)
     {
-        // Pega todos os dados que passaram na validação (space_id, start_time, end_time)
         $data = $request->all();
 
         // Injeta o ID do usuário que está logado no sistema no momento
@@ -63,15 +64,18 @@ class BookingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $booking = Booking::findOrFail($id);
+        $spaces = Space::all();
+        return view('bookings.edit', compact('booking', 'spaces'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreBookingRequest $request, string $id)
     {
-        //
+        Booking::findOrFail($id)->update($request->all());
+        return redirect()->route('bookings.index');
     }
 
     /**
@@ -79,6 +83,7 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Booking::findOrFail($id)->delete();
+        return redirect()->route('bookings.index');
     }
 }
