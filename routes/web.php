@@ -12,7 +12,33 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    // Busca as reservas já trazendo as relações de espaço e usuário para não pesar o banco
+    $query = \App\Models\Booking::with(['space', 'user']);
+
+    // Se NÃO for admin, filtra apenas as reservas do usuário logado
+    if (auth()->user()->role !== 'admin') {
+        $query->where('user_id', auth()->id());
+    }
+
+    // Mapeia os resultados para o formato que o FullCalendar entende
+    $eventos = $query->get()->map(function($booking) {
+        $titulo = $booking->space->name;
+
+        // Se for admin, adiciona o nome de quem reservou do lado do nome do espaço
+        if (auth()->user()->role === 'admin') {
+            $titulo .= ' (' . $booking->user->name . ')';
+        }
+
+        return [
+            'title' => $titulo,
+            'start' => $booking->start_time,
+            'end'   => $booking->end_time,
+            // Truque de UX: Cor azul (Indigo) para as reservas do próprio usuário, e cinza para as reservas dos outros
+            'color' => auth()->id() === $booking->user_id ? '#4F46E5' : '#6B7280',
+        ];
+    });
+
+    return view('dashboard', compact('eventos'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
