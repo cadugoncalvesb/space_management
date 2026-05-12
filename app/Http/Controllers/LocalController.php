@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Space;
 use Illuminate\Http\Request;
 use App\Models\Local;
 use App\Http\Requests\StoreLocalRequest;
@@ -70,8 +71,14 @@ class LocalController extends Controller
      */
     public function destroy(string $id)
     {
-        Local::findOrFail($id)->delete();
+        $local = Local::findOrFail($id);
 
-        return redirect()->route('locals.index');
+        if (Space::where('local_id', $id)->exists()) {
+            return redirect()->route('locals.index')->with('error', 'Ação bloqueada: Não é possível excluir um local com espaço vinculado a ele.');
+        }
+
+        $local->delete();
+
+        return redirect()->route('locals.index')->with('success', 'Local excluído com sucesso.');
     }
 }

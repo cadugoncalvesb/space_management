@@ -11,6 +11,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
+                    @if(session('error'))
+                        <div class="">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     @if(auth()->user()->role === 'admin')
                         <div class="mb-6 flex justify-end">
                             <a href="{{ route('locals.create') }}"
@@ -29,7 +41,9 @@
 
                                     <div class="text-lg font-medium text-gray-900">
                                         {{ $local->name }} <br>
-                                        Descrição: {{$local->description}}
+                                        @if($local->description != null)
+                                            Descrição: {{$local->description}}
+                                        @endif
                                     </div>
 
                                     @if(auth()->user()->role === 'admin')

@@ -11,6 +11,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
+                    @if(session('error'))
+                        <div class="">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <a href="{{ route('spaces.create') }}">Cadastrar Novo Espaço</a>
                     <br><br>
 

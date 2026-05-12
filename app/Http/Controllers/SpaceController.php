@@ -76,8 +76,14 @@ class SpaceController extends Controller
      */
     public function destroy(string $id)
     {
-        Space::findOrFail($id)->delete();
+        $space = Space::FindOrFail($id);
 
-        return redirect()->route('spaces.index');
+        if (Booking::where('space_id', $id)->exists()) {
+            return redirect()->route('spaces.index')->with('error', 'Ação bloqueada: Não é possível excluir um espaço com uma reserva vinculada a ele.');
+        }
+
+        $space->delete();
+
+        return redirect()->route('spaces.index')->with('success', 'Espaço excluído com sucesso.');
     }
 }
