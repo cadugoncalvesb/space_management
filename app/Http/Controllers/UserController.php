@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Testing\Fluent\Concerns\Has;
+use App\Models\Booking;
 
 class UserController extends Controller
 {
@@ -86,8 +86,14 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
 
-        return redirect()->route('users.index');
+        if (Booking::where('user_id', $id)->exists()) {
+            return redirect()->route('users.index')->with('error', 'Ação bloqueada: Não é possível excluir um usuário que conteha reservas.');
+        }
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso.');
     }
 }

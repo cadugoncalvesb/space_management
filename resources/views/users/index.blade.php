@@ -11,6 +11,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
+                    @if(session('error'))
+                        <div class="">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if(session('success'))
+                        <div class="">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <a href="{{ route('users.create') }}">Cadastrar Novo Usuário</a>
 
                     <table border="1" cellpadding="10" cellspacing="0" style="margin-top: 20px;">
