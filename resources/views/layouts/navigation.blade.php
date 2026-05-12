@@ -20,13 +20,14 @@
                         {{ __('Reservas') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('spaces.index')" :active="request()->routeIs('spaces.*')">
+                        {{ __('Espaços') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('locals.index')" :active="request()->routeIs('locals.*')">
                         {{ __('Locais') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('spaces.index')" :active="request()->routeIs('spaces.*')">
-                        {{ __('Espaços') }}
-                    </x-nav-link>
 
                     @if(auth()->user()->role === 'admin')
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">

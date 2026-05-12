@@ -31,16 +31,11 @@
                                 <option value="">Selecione um espaço</option>
                                 @foreach($spaces as $space)
                                     <option value="{{ $space->id }}" {{ old('space_id') == $space->id ? 'selected' : '' }}>
-                                        {{ $space->name }} (Capacidade: {{ $space->capacity }})
+                                        {{ $space->name }} - {{$space->local?->name ?? 'Local não definido' }} - (Capacidade: {{ $space->capacity }})
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-
-{{--                        <div>--}}
-{{--                            <x-input-label for="date" value="Data da Reserva" />--}}
-{{--                            <x-text-input id="date" name="date" type="date" class="mt-1 block w-full" value="{{ old('date') }}" required min="{{ date('Y-m-d') }}" />--}}
-{{--                        </div>--}}
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>

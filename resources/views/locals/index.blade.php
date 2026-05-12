@@ -28,7 +28,8 @@
                                 <li class="py-4 flex items-center justify-between">
 
                                     <div class="text-lg font-medium text-gray-900">
-                                        {{ $local->name }} - Descrição: {{$local->description}}
+                                        {{ $local->name }} <br>
+                                        Descrição: {{$local->description}}
                                     </div>
 
                                     @if(auth()->user()->role === 'admin')

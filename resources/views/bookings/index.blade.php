@@ -27,7 +27,7 @@
 
                                     <div>
                                         <div class="text-lg font-medium text-gray-900">
-                                            {{ $booking->space->name }}
+                                            {{ $booking->space->name }} - {{ $booking->space->local->name }}
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             @php

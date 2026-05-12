@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Local;
 use App\Models\Space;
 use Illuminate\Http\Request;
 use App\Models\Booking;
@@ -31,7 +32,8 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $spaces = Space::all();
+        $spaces = Space::with('local')->get();
+
         return view('bookings.create', compact('spaces'));
     }
 

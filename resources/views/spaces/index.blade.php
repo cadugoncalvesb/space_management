@@ -42,6 +42,7 @@
                                         <form action="{{ route('spaces.destroy', $space->id) }}" method="POST"
                                               style="display:inline;"
                                               onsubmit="return confirm('Tem certeza que deseja exluir este espaço?')">
+{{--                                            @if({{$space-}}) @endif--}}
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">Excluir</button>
