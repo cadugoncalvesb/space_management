@@ -23,7 +23,9 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('spaces.create') }}">Cadastrar Novo Espaço</a>
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('spaces.create') }}">Cadastrar Novo Espaço</a>
+                    @endif
                     <br><br>
 
                     <table border="1">
@@ -54,7 +56,7 @@
                                         <form action="{{ route('spaces.destroy', $space->id) }}" method="POST"
                                               style="display:inline;"
                                               onsubmit="return confirm('Tem certeza que deseja exluir este espaço?')">
-{{--                                            @if({{$space-}}) @endif--}}
+                                            {{--                                            @if({{$space-}}) @endif--}}
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">Excluir</button>
