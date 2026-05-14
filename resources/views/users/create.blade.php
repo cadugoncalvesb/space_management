@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Novo Usuário') }}
+            {{ __('Cadastrar Novo Usuário') }}
         </h2>
     </x-slot>
 
@@ -11,40 +11,79 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    @if ($errors->any())
-                        <div style="color: red; margin-bottom: 20px;">
-                            <strong>Atenção:</strong>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                    @if(session('error'))
+                        <div class="">
+                            {{ session('error') }}
                         </div>
                     @endif
 
-                    <form action="{{ route('users.store') }}" method="POST">
+                    @if(session('success'))
+                        <div class="">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('users.store') }}" method="POST" class="space-y-6">
                         @csrf
 
-                        <p>Nome: <input type="text" name="name" value="{{ old('name') }}"></p>
+                        <div>
+                            <x-input-label for="name" value="Nome Completo"/>
+                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                                          value="{{ old('name') }}" required autofocus/>
+                        </div>
 
-                        <p>E-mail: <input type="email" name="email" value="{{ old('email') }}"></p>
-
-                        <p>Telefone: <input type="text" name="phone" value="{{ old('phone') }}"></p>
-
-                        <p>Perfil:
-                            <select name="role">
-                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Usuário</option>
+                        <div>
+                            <x-input-label for="role" value="Perfil de Acesso"/>
+                            <select id="role" name="role"
+                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Usuário Comum
+                                </option>
                                 <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrador
                                 </option>
                             </select>
-                        </p>
+                        </div>
 
-                        <p>Senha: <input type="password" name="password"></p>
 
-                        <p>Confirmar Senha: <input type="password" name="password_confirmation"></p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <x-input-label for="phone" value="Telefone"/>
+                                <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full"
+                                              value="{{ old('phone') }}"/>
+                            </div>
 
-                        <button type="submit">Salvar Usuário</button>
+                        </div>
+                        <div>
+                            <x-input-label for="email" value="E-mail"/>
+                            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
+                                          value="{{ old('email') }}" required/>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <x-input-label for="password" value="Senha"/>
+                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
+                                              required/>
+                            </div>
+
+                            <div>
+                                <x-input-label for="password_confirmation" value="Confirmar Senha"/>
+                                <x-text-input id="password_confirmation" name="password_confirmation" type="password"
+                                              class="mt-1 block w-full" required/>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 pt-4 border-t border-gray-200">
+                            <x-primary-button>
+                                Cadastrar Usuário
+                            </x-primary-button>
+
+                            <a href="{{ route('users.index') }}"
+                               class="text-sm text-gray-600 hover:text-gray-900 transition ease-in-out duration-150">
+                                Cancelar e Voltar
+                            </a>
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
