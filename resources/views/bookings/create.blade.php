@@ -40,12 +40,12 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <x-input-label for="start_time" value="Início (Data e Hora)" />
-                                <x-text-input id="start_time" name="start_time" type="datetime-local" class="mt-1 block w-full" value="{{ old('start_time') }}" required min="{{ date('Y-m-d\TH:i') }}" />
+                                <x-text-input id="start_time" name="start_time" type="datetime-local" class="mt-1 block w-full" value="{{ old('start_time') }}" required min="{{ now()->format('Y-m-d\TH:i') }}" />
                             </div>
 
                             <div>
                                 <x-input-label for="end_time" value="Término (Data e Hora)" />
-                                <x-text-input id="end_time" name="end_time" type="datetime-local" class="mt-1 block w-full" value="{{ old('end_time') }}" required min="{{ date('Y-m-d\TH:i') }}" />
+                                <x-text-input id="end_time" name="end_time" type="datetime-local" class="mt-1 block w-full" value="{{ old('end_time') }}" required min="{{ now()->format('Y-m-d\TH:i') }}" />
                             </div>
                         </div>
 
