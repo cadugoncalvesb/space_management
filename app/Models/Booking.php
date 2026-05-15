@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Booking extends Model
 {
+    use LogsActivity;
     protected $fillable = [
       'user_id',
       'space_id',
@@ -13,6 +16,15 @@ class Booking extends Model
       'end_time',
       'status',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->setDescriptionForEvent(fn(string $eventName) => "Reserva foi {$eventName}");
+    }
 
     public function user()
     {
