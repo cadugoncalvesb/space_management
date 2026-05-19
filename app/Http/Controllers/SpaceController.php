@@ -17,7 +17,9 @@ class SpaceController extends Controller
     {
         // O padrão seria $spaces = Space::all();
         // Mas como irá exibir o nome do Local na tela, usa-se o 'with' para o banco de dados já trazer essa informação junto.
-        $spaces = Space::with('local')->get();
+        $spaces = Space::with('local')
+            ->orderBy('status', 'asc')
+            ->get();
 
         return view('spaces.index', compact('spaces'));
     }

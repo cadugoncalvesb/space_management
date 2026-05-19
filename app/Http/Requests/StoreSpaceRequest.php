@@ -26,7 +26,7 @@ class StoreSpaceRequest extends FormRequest
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'capacity' => 'required|integer|min:1',
-            'status' => 'required|string|in:active,inactive, maintenance',
+            'status' => 'required|string|', // in:active,inactive, maintenance
             'local_id' => 'required|exists:locals,id',
         ];
     }
