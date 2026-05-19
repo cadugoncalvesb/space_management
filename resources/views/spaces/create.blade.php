@@ -11,44 +11,67 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    @if($errors->any())
-                        <div style="color: red; margin-bottom: 20px;">
-                            <strong>Atenção:</strong>
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{$error}}</li>
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6">
+                            <strong class="font-bold">Atenção!</strong>
+                            <ul class="mt-2 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
 
-                    <form action="{{ route('spaces.store') }}" method="POST">
+                    <form action="{{ route('spaces.store') }}" method="POST" class="space-y-6">
                         @csrf
 
-                        Nome do Espaço: <input type="text" name="name" value="{{old('name')}}" required>
-                        Tipo (ex: Laboratório, Sala): <input type="text" name="type" value="{{old('type')}}" required>
-                        Capacidade: <input type="number" name="capacity" value="{{old('capacity')}}" required>
-                        Status:
-                        <select name="status" required>
-                            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Ativo</option>
-                            <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inativo
-                            </option>
-                            <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Em
-                                Manutenção
-                            </option>
-                        </select>
-                        <select name="local_id" required>
-                            <option value="">Selecione um Local:</option>
-                            @foreach($locals as $local)
-                                <option value="{{ $local->id }}">{{ $local->name }}</option>
-                            @endforeach
-                        </select>
+                        <div>
+                            <x-input-label for="name" value="Nome do Espaço" />
+                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value="{{ old('name') }}" required autofocus placeholder="Ex: Laboratório de Informática 01" />
+                        </div>
 
-                        <button type="submit">Salvar Espaço</button>
+                        <div>
+                            <x-input-label for="type" value="Tipo (ex: Laboratório, Sala, Auditório)" />
+                            <x-text-input id="type" name="type" type="text" class="mt-1 block w-full" value="{{ old('type') }}" required />
+                        </div>
+
+                        <div>
+                            <x-input-label for="local_id" value="Local / Prédio" />
+                            <select id="local_id" name="local_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                                <option value="" disabled {{ old('local_id') ? '' : 'selected' }}>Selecione um local...</option>
+                                @foreach($locals as $local)
+                                    <option value="{{ $local->id }}" {{ old('local_id') == $local->id ? 'selected' : '' }}>
+                                        {{ $local->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <x-input-label for="capacity" value="Capacidade (Pessoas)" />
+                            <x-text-input id="capacity" name="capacity" type="number" class="mt-1 block w-full" value="{{ old('capacity') }}" required />
+                        </div>
+
+                        <div>
+                            <x-input-label for="status" value="Status Inicial" />
+                            <select id="status" name="status" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                                <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Ativo</option>
+                                <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inativo</option>
+                                <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Em Manutenção</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-center gap-4 pt-4">
+                            <x-primary-button>
+                                Salvar Novo Espaço
+                            </x-primary-button>
+
+                            <a href="{{ route('spaces.index') }}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                                Cancelar e Voltar
+                            </a>
+                        </div>
                     </form>
 
-                    <br>
-                    <a href="{{ route('spaces.index') }}">Voltar para a lista</a>
                 </div>
             </div>
         </div>
