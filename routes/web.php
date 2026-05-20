@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResourceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\SpaceController;
@@ -51,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('spaces', SpaceController::class);
     Route::resource('users', UserController::class);
     Route::resource('bookings', BookingController::class);
+    Route::resource('resources', ResourceController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -28,6 +28,10 @@
                         {{ __('Locais') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('resources.index')" :active="request()->routeIs('resources.*')">
+                        {{ __('Recursos') }}
+                    </x-nav-link>
+
 
                     @if(auth()->user()->role === 'admin')
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
