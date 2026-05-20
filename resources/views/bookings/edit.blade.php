@@ -27,28 +27,37 @@
                         @method('PUT')
 
                         <div>
-                            <x-input-label for="space_id" value="Qual espaço deseja reservar?" />
-                            <select id="space_id" name="space_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                            <x-input-label for="space_id" value="Qual espaço deseja reservar?"/>
+                            <select id="space_id" name="space_id"
+                                    class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    required>
                                 <option value="">Selecione um espaço</option>
                                 @foreach($spaces as $space)
-                                    <option value="{{ $space->id }}" {{ old('space_id', $booking->space_id) == $space->id ? 'selected' : '' }}>
-                                        {{ $space->name }} (Capacidade: {{ $space->capacity }})
-                                    </option>
+                                    @if($space->status === 'active')
+                                        <option
+                                            value="{{ $space->id }}" {{ old('space_id', $booking->space_id) == $space->id ? 'selected' : '' }}>
+                                            {{ $space->name }} (Capacidade: {{ $space->capacity }})
+                                        </option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <x-input-label for="start_time" value="Início (Data e Hora)" />
-                                <x-text-input id="start_time" name="start_time" type="datetime-local" class="mt-1 block w-full"
-                                              value="{{ old('start_time', \Carbon\Carbon::parse($booking->start_time)->format('Y-m-d\TH:i')) }}" required />
+                                <x-input-label for="start_time" value="Início (Data e Hora)"/>
+                                <x-text-input id="start_time" name="start_time" type="datetime-local"
+                                              class="mt-1 block w-full"
+                                              value="{{ old('start_time', \Carbon\Carbon::parse($booking->start_time)->format('Y-m-d\TH:i')) }}"
+                                              required/>
                             </div>
 
                             <div>
-                                <x-input-label for="end_time" value="Término (Data e Hora)" />
-                                <x-text-input id="end_time" name="end_time" type="datetime-local" class="mt-1 block w-full"
-                                              value="{{ old('end_time', \Carbon\Carbon::parse($booking->end_time)->format('Y-m-d\TH:i')) }}" required />
+                                <x-input-label for="end_time" value="Término (Data e Hora)"/>
+                                <x-text-input id="end_time" name="end_time" type="datetime-local"
+                                              class="mt-1 block w-full"
+                                              value="{{ old('end_time', \Carbon\Carbon::parse($booking->end_time)->format('Y-m-d\TH:i')) }}"
+                                              required/>
                             </div>
                         </div>
 
