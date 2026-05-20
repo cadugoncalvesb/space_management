@@ -11,12 +11,52 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <div class="mb-6 flex justify-end">
-                        <a href="{{ route('bookings.create') }}"
-                           class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
-                            + Fazer Nova Reserva
-                        </a>
+                    <div class="mb-6 flex justify-between items-end">
+
+                        <div>
+                            <form method="GET" action="{{ route('bookings.index') }}" class="flex items-end gap-3">
+
+                                <div class="flex justify-center">
+                                    <div>
+                                        <label for="space_id" class="block text-sm font-medium text-gray-700 mb-1">Filtrar
+                                            por Espaço</label>
+
+                                        <select name="space_id" id="space_id"
+                                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                            <option value="">Todos os espaços</option>
+
+                                            @foreach($spaces as $space)
+                                                <option
+                                                    value="{{ $space->id }}" {{ request('space_id') == $space->id ? 'selected' : '' }}>
+                                                    {{ $space->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <button type="submit"
+                                            class="bg-indigo-500 px-4 py-2 rounded-md hover:bg-indigo-700 transition mt-6">
+                                        🔍 Filtrar
+                                    </button>
+
+                                    <a href="{{ route('bookings.index') }}"
+                                       class="text-gray-500 hover:text-gray-700 px-4 py-2 text-center mt-6">
+                                        Limpar
+                                    </a>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div>
+                            <a href="{{ route('bookings.create') }}"
+                               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
+                                + Fazer Nova Reserva
+                            </a>
+                        </div>
+
                     </div>
+
 
                     @if($bookings->isEmpty())
                         <p class="text-center text-gray-500 py-4">Nenhuma reserva encontrada.</p>
@@ -37,10 +77,12 @@
 
                                             @if($start->isSameDay($end))
                                                 <!-- Se for no mesmo dia: dd/mm/yy das hh:mm às hh:mm -->
-                                                Data: {{ $start->format('d/m/y') }} das {{ $start->format('H:i') }} às {{ $end->format('H:i') }}
+                                                Data: {{ $start->format('d/m/y') }} das {{ $start->format('H:i') }}
+                                                às {{ $end->format('H:i') }}
                                             @else
                                                 <!-- Se passar de um dia para o outro: dd/mm/yy hh:mm até dd/mm/yy hh:mm -->
-                                                Data: {{ $start->format('d/m/y - H:i') }} até {{ $end->format('d/m/y - H:i') }}
+                                                Data: {{ $start->format('d/m/y - H:i') }}
+                                                até {{ $end->format('d/m/y - H:i') }}
                                             @endif
                                         </div>
 
@@ -53,7 +95,8 @@
                                     </div>
 
                                     <div class="flex items-center gap-3">
-                                        <a href="{{route('bookings.edit', $booking->id)}}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                                        <a href="{{route('bookings.edit', $booking->id)}}"
+                                           class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                                             Editar Reserva
                                         </a>
 

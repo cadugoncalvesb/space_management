@@ -14,17 +14,22 @@ class BookingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $query = Booking::with(['user', 'space']);
 
-        if ($user->role === 'admin') {
-            $bookings = Booking::with(['user', 'space'])->latest()->get();
-        } else {
-            $bookings = Booking::with(['space'])->where('user_id', $user->id)->latest()->get();
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
         }
 
-        return view('bookings.index', compact('bookings'));
+        $query->when($request->filled('space_id'), function ($q) use ($request) {
+            $q->where('space_id', $request->space_id);
+        });
+
+        $bookings = $query->latest()->get();
+        $spaces = Space::all();
+        return view('bookings.index', compact('bookings', 'spaces'));
     }
 
     /**
