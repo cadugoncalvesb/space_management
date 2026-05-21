@@ -62,6 +62,24 @@
                             </select>
                         </div>
 
+                        <div class="mt-4 mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Recursos do Espaço:</label>
+
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 border border-gray-200 rounded-md bg-gray-50">
+                                @foreach($resources as $resource)
+                                    <label class="inline-flex items-center cursor-pointer">
+                                        <input type="checkbox"
+                                               name="resources[]"
+                                               value="{{ $resource->id }}"
+                                               class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            {{ in_array($resource->id, old('resources', isset($space) ? $space->resources->pluck('id')->toArray() : [])) ? 'checked' : '' }}
+                                        >
+                                        <span class="ml-2 text-sm text-gray-700">{{ $resource->name }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="flex items-center gap-4">
                             <x-primary-button>
                                 Atualizar Espaço

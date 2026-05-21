@@ -59,6 +59,10 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status
                                     </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Recursos
+                                    </th>
                                     @if(auth()->user()->role === 'admin')
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -97,6 +101,20 @@
                                                 } }}
                                             </div>
                                         </td>
+
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex flex-wrap gap-1">
+                                                @forelse($space->resources as $resource)
+                                                    <span
+                                                        class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-md border border-blue-200">
+                                                        {{ $resource->name }}
+                                                    </span>
+                                                @empty
+                                                    <span class="text-xs text-gray-400 italic">Nenhum recurso</span>
+                                                @endforelse
+                                            </div>
+                                        </td>
+
 
                                         @if(auth()->user()->role === 'admin')
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

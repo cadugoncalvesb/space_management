@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Resource;
 use Illuminate\Http\Request;
 use App\Models\Space;
 use App\Models\Local;
@@ -17,7 +18,7 @@ class SpaceController extends Controller
     {
         // O padrão seria $spaces = Space::all();
         // Mas como irá exibir o nome do Local na tela, usa-se o 'with' para o banco de dados já trazer essa informação junto.
-        $spaces = Space::with('local')
+        $spaces = Space::with('local', 'resources')
             ->orderBy('status', 'asc')
             ->get();
 
@@ -30,8 +31,9 @@ class SpaceController extends Controller
     public function create()
     {
         $locals = Local::all();
+        $resources = Resource::all();
 
-        return view('spaces.create', compact('locals'));
+        return view('spaces.create', compact('locals', 'resources'));
     }
 
     /**
@@ -39,7 +41,9 @@ class SpaceController extends Controller
      */
     public function store(StoreSpaceRequest $request)
     {
-        Space::create($request->all());
+        $space = Space::create($request->except('resources'));
+        // Vincula os recursos com o espaço
+        $space->resources()->sync($request->input('resources', []));
 
         return redirect()->route('spaces.index');
     }
@@ -57,9 +61,10 @@ class SpaceController extends Controller
      */
     public function edit(string $id)
     {
-        $space = Space::findOrFail($id);
+        $space = Space::with('resources')->findOrFail($id);
         $locals = Local::all();
-        return view('spaces.edit', compact('space', 'locals'));
+        $resources = Resource::all();
+        return view('spaces.edit', compact('space', 'locals', 'resources'));
     }
 
     /**
@@ -68,7 +73,9 @@ class SpaceController extends Controller
     public function update(StoreSpaceRequest $request, string $id)
     {
         $space = Space::findOrFail($id);
-        $space->update($request->all());
+        $space->update($request->except('resources'));
+
+        $space->resources()->sync($request->input('resources', []));
 
         return redirect()->route('spaces.index');
     }

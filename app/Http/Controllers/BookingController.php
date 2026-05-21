@@ -37,7 +37,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $spaces = Space::with('local')->get();
+        $spaces = Space::with('local', 'resources')->get();
 
         return view('bookings.create', compact('spaces'));
     }
