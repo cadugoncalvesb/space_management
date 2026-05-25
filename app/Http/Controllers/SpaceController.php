@@ -16,7 +16,7 @@ class SpaceController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Space::with('resources');
+        $query = Space::with('resources', 'local');
 
         $query->when($request->filled('resource_id'), function ($q) use ($request) {
             $q->whereHas('resources', function ($queryRelacao) use ($request) {
@@ -24,10 +24,15 @@ class SpaceController extends Controller
             });
         });
 
+        $query->when($request->filled('local_id'), function ($q) use ($request) {
+            $q->where('local_id', $request->local_id);
+        });
+
         $spaces = $query->orderBy('status', 'asc')->get();
         $resources = Resource::all();
+        $locals = Local::all();
 
-        return view('spaces.index', compact('spaces', 'resources'));
+        return view('spaces.index', compact('spaces', 'resources', 'locals'));
     }
 
     /**
