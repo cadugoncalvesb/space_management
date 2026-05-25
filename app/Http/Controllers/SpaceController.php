@@ -14,15 +14,20 @@ class SpaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // O padrão seria $spaces = Space::all();
-        // Mas como irá exibir o nome do Local na tela, usa-se o 'with' para o banco de dados já trazer essa informação junto.
-        $spaces = Space::with('local', 'resources')
-            ->orderBy('status', 'asc')
-            ->get();
+        $query = Space::with('resources');
 
-        return view('spaces.index', compact('spaces'));
+        $query->when($request->filled('resource_id'), function ($q) use ($request) {
+            $q->whereHas('resources', function ($queryRelacao) use ($request) {
+                $queryRelacao->where('resources.id', $request->resource_id);
+            });
+        });
+
+        $spaces = $query->orderBy('status', 'asc')->get();
+        $resources = Resource::all();
+
+        return view('spaces.index', compact('spaces', 'resources'));
     }
 
     /**

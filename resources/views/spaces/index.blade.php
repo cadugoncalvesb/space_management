@@ -23,14 +23,53 @@
                         </div>
                     @endif
 
-                    @if(auth()->user()->role === 'admin')
-                        <div class="mb-6 flex justify-end">
-                            <a href="{{ route('spaces.create') }}"
-                               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                + Cadastrar Novo Espaço
-                            </a>
+                    <div class="mb-6 flex justify-between items-end">
+
+                        <div>
+                            <form method="GET" action="{{ route('spaces.index') }}" class="flex items-end gap-3">
+
+                                <div class="flex justify-center">
+                                    <div>
+                                        <label for="resource_id" class="block text-sm font-medium text-gray-700 mb-1">Filtrar
+                                            por Recurso</label>
+
+                                        <select name="resource_id" id="resource_id"
+                                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                            <option value="">Todos os recursos</option>
+
+                                            @foreach($resources as $resource)
+                                                <option
+                                                    value="{{ $resource->id }}" {{ request('resource_id') == $resource->id ? 'selected' : '' }}>
+                                                    {{ $resource->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <button type="submit"
+                                            class="bg-indigo-500 px-4 py-2 rounded-md hover:bg-indigo-700 transition mt-6">
+                                        🔍 Filtrar
+                                    </button>
+
+                                    <a href="{{ route('spaces.index') }}"
+                                       class="text-gray-500 hover:text-gray-700 px-4 py-2 text-center mt-6">
+                                        Limpar
+                                    </a>
+                                </div>
+
+                            </form>
                         </div>
-                    @endif
+
+                        @if(auth()->user()->role === 'admin')
+                            <div class="mb-6 flex justify-end">
+                                <a href="{{ route('spaces.create') }}"
+                                   class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    + Cadastrar Novo Espaço
+                                </a>
+                            </div>
+                        @endif
+
+                    </div>
 
                     @if($spaces->isEmpty())
                         <p class="text-center text-gray-500 py-4">Nenhum espaço cadastrado no momento.</p>
