@@ -84,7 +84,7 @@
                                         </td>
 
                                         <!-- DESCRIÇÃO (Retirado o whitespace-nowrap) -->
-                                        <td class="px-6 py-4 text-gray-700 break-words">
+                                        <td class="px-6 py-4 text-gray-700 break-words text-center">
                                             {{ $log->description }}
                                         </td>
 
