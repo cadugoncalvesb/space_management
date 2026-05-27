@@ -71,12 +71,12 @@
                                             <div class="text-sm text-gray-500">{{ $user->email }}</div>
                                         </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
                                             <div
                                                 class="text-sm text-gray-500">{{ $user->phone ?? 'Não informado' }}</div>
                                         </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
                                             @if($user->role == 'admin')
                                                 <span
                                                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
