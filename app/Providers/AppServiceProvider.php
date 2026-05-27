@@ -58,8 +58,8 @@ class AppServiceProvider extends ServiceProvider
             activity('seguranca')
                 ->causedBy($event->user) // Pode ser null se o email não existir no banco
                 ->event('falha_login')
-                ->log("Tentativa de login falhou para o e-mail: {$event->credentials['email']}")
-                ->withProperties(['ip' => request()->ip(), 'user_agent' => request()->userAgent()]);
+                ->withProperties(['ip' => request()->ip(), 'user_agent' => request()->userAgent()])
+                ->log("Tentativa de login falhou para o e-mail: {$event->credentials['email']}");
         });
 
         // Captura logOut
