@@ -25,51 +25,53 @@
 
                     <div class="mb-6 flex justify-between items-end">
 
-                        <div>
-                            <form method="GET" action="{{ route('spaces.index') }}" class="flex items-end gap-3">
+                        @if($spaces->isNotEmpty())
+                            <div>
+                                <form method="GET" action="{{ route('spaces.index') }}" class="flex items-end gap-3">
 
-                                <div>
-                                    <label for="resource_id" class="block text-sm font-medium text-gray-700 mb-1">Filtrar
-                                        por Recurso</label>
-                                    <select name="resource_id" id="resource_id"
-                                            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                        <option value="">Todos os recursos</option>
-                                        @foreach($resources as $resource)
-                                            <option
-                                                value="{{ $resource->id }}" {{ request('resource_id') == $resource->id ? 'selected' : '' }}>
-                                                {{ $resource->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                    <div>
+                                        <label for="resource_id" class="block text-sm font-medium text-gray-700 mb-1">Filtrar
+                                            por Recurso</label>
+                                        <select name="resource_id" id="resource_id"
+                                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                            <option value="">Todos os recursos</option>
+                                            @foreach($resources as $resource)
+                                                <option
+                                                    value="{{ $resource->id }}" {{ request('resource_id') == $resource->id ? 'selected' : '' }}>
+                                                    {{ $resource->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                <div>
-                                    <label for="local_id" class="block text-sm font-medium text-gray-700 mb-1">Filtrar
-                                        por Local</label>
-                                    <select name="local_id" id="local_id"
-                                            class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                        <option value="">Todos os locais</option>
-                                        @foreach($locals as $local)
-                                            <option
-                                                value="{{ $local->id }}" {{ request('local_id') == $local->id ? 'selected' : '' }}>
-                                                {{ $local->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                    <div>
+                                        <label for="local_id" class="block text-sm font-medium text-gray-700 mb-1">Filtrar
+                                            por Local</label>
+                                        <select name="local_id" id="local_id"
+                                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                            <option value="">Todos os locais</option>
+                                            @foreach($locals as $local)
+                                                <option
+                                                    value="{{ $local->id }}" {{ request('local_id') == $local->id ? 'selected' : '' }}>
+                                                    {{ $local->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                <button type="submit"
-                                        class="bg-indigo-500 px-4 py-2 rounded-md hover:bg-indigo-700 transition mt-6">
-                                    🔍 Filtrar
-                                </button>
+                                    <button type="submit"
+                                            class="bg-indigo-500 px-4 py-2 rounded-md hover:bg-indigo-700 transition mt-6">
+                                        🔍 Filtrar
+                                    </button>
 
-                                <a href="{{ route('spaces.index') }}"
-                                   class="text-gray-500 hover:text-gray-700 px-4 py-2 text-center mt-6">
-                                    Limpar
-                                </a>
+                                    <a href="{{ route('spaces.index') }}"
+                                       class="text-gray-500 hover:text-gray-700 px-4 py-2 text-center mt-6">
+                                        Limpar
+                                    </a>
 
-                            </form>
-                        </div>
+                                </form>
+                            </div>
+                        @endif
 
                         @if(auth()->user()->role === 'admin')
                             <div>
