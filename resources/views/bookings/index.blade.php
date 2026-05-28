@@ -50,12 +50,20 @@
                             </div>
                         @endif
 
-                        <div>
-                            <a href="{{ route('bookings.create') }}"
-                               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
-                                + Fazer Nova Reserva
-                            </a>
-                        </div>
+                        @if($spaces->isEmpty())
+                            <div>
+                                <span class="text-gray-400 cursor-not-allowed" title="Não existem espaços a serem reservados.">
+                                    + Fazer Nova Reserva
+                                </span>
+                            </div>
+                        @else
+                            <div>
+                                <a href="{{ route('bookings.create') }}"
+                                   class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
+                                    + Fazer Nova Reserva
+                                </a>
+                            </div>
+                        @endif
 
                     </div>
 
